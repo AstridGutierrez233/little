@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>极简黑白 iPhone 主题</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #e5e5e5;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        .phone-container {
+            width: 390px;
+            height: 844px;
+            background-color: #f4f4f6;
+            border-radius: 50px;
+            border: 14px solid #1c1c1e;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.15), inset 0 0 0 2px #444;
+        }
+
+        /* 顶部刘海/灵动岛模拟 */
+        .dynamic-island {
+            position: absolute;
+            top: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 35px;
+            background-color: #000;
+            border-radius: 20px;
+            z-index: 20;
+        }
+
+        /* 视觉装饰：不规则几何与线条 */
+        .bg-polygon-1 {
+            position: absolute;
+            top: -20px;
+            left: -40px;
+            width: 250px;
+            height: 250px;
+            background-color: rgba(0, 0, 0, 0.04);
+            clip-path: polygon(20% 0%, 100% 20%, 80% 100%, 0% 80%);
+            z-index: 0;
+        }
+
+        .bg-polygon-2 {
+            position: absolute;
+            bottom: 80px;
+            right: -50px;
+            width: 300px;
+            height: 300px;
+            background-color: rgba(0, 0, 0, 0.03);
+            clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
+            z-index: 0;
+        }
+
+        .bg-line-1 {
+            position: absolute;
+            top: 25%;
+            left: -20px;
+            width: 150%;
+            height: 1px;
+            background-color: rgba(0, 0, 0, 0.06);
+            transform: rotate(-15deg);
+            z-index: 0;
+        }
+
+        .bg-line-2 {
+            position: absolute;
+            top: 65%;
+            left: -20px;
+            width: 150%;
+            height: 2px;
+            background-color: rgba(0, 0, 0, 0.04);
+            transform: rotate(25deg);
+            z-index: 0;
+        }
+
+        /* 头像与页脚 (Header & Backdrop) */
+        .avatar {
+            position: absolute;
+            top: 90px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 86px;
+            height: 86px;
+            background-color: #fff;
+            border-radius: 50%;
+            z-index: 10;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 3px solid #f8f8f8;
+        }
+
+        .avatar svg {
+            width: 44px;
+            height: 44px;
+            color: #222;
+            stroke-width: 1.2;
+        }
+
+        .backdrop {
+            position: absolute;
+            top: 133px; /* 从头像中心开始 (90 + 86/2) */
+            left: 5%;
+            width: 90%;
+            height: 160px;
+            background-color: #ffffff;
+            border-radius: 28px;
+            z-index: 5;
+            box-shadow: 0 12px 35px rgba(0,0,0,0.04);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end;
+            padding-bottom: 25px;
+            box-sizing: border-box;
+        }
+
+        .backdrop .title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #111;
+            letter-spacing: 1px;
+            margin-bottom: 6px;
+        }
+
+        .backdrop .subtitle {
+            font-size: 13px;
+            color: #999;
+            letter-spacing: 0.5px;
+        }
+
+        /* 图标与网格 (App Grid) */
+        .main-content {
+            position: absolute;
+            top: 320px;
+            left: 5%;
+            width: 90%;
+            display: flex;
+            gap: 16px;
+            z-index: 5;
+        }
+
+        .left-widget {
+            flex: 1;
+            background-color: #ffffff;
+            border-radius: 28px;
+            height: 240px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.03);
+            transition: transform 0.2s ease;
+            cursor: pointer;
+        }
+
+        .left-widget:active {
+            transform: scale(0.96);
+        }
+
+        .left-widget svg {
+            width: 64px;
+            height: 64px;
+            color: #111;
+            stroke-width: 1;
+        }
+
+        .right-grid {
+            flex: 1.2;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-template-rows: repeat(3, 1fr);
+            gap: 14px;
+            height: 240px;
+        }
+
+        .app-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+
+        .app-icon {
+            width: 54px;
+            height: 54px;
+            background-color: #ffffff;
+            border-radius: 16px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 6px 16px rgba(0,0,0,0.04);
+            transition: transform 0.2s ease;
+        }
+
+        .app-item:active .app-icon {
+            transform: scale(0.92);
+            background-color: #f0f0f0;
+        }
+
+        .app-icon svg {
+            width: 26px;
+            height: 26px;
+            color: #333;
+            stroke-width: 1.5;
+        }
+
+        .app-name {
+            font-size: 12px;
+            color: #555;
+            font-weight: 500;
+        }
+
+        /* 底栏 (Dock) */
+        .dock {
+            position: absolute;
+            bottom: 35px;
+            left: 5%;
+            width: 90%;
+            height: 90px;
+            background-color: rgba(240, 240, 240, 0.45);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 35px;
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+            z-index: 10;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.06);
+            border: 1px solid rgba(255,255,255,0.6);
+        }
+
+        .dock-item {
+            width: 60px;
+            height: 60px;
+            background-color: rgba(255, 255, 255, 0.85);
+            border-radius: 18px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.05);
+            transition: transform 0.2s ease;
+            cursor: pointer;
+        }
+
+        .dock-item:active {
+            transform: scale(0.92);
+            background-color: #e8e8e8;
+        }
+
+        .dock-item svg {
+            width: 28px;
+            height: 28px;
+            color: #111;
+            stroke-width: 1.5;
+        }
+    </style>
+</head>
+<body>
+    <div class="phone-container">
+        <div class="dynamic-island"></div>
+
+        <!-- 视觉装饰：不规则几何与线条 -->
+        <div class="bg-polygon-1"></div>
+        <div class="bg-polygon-2"></div>
+        <div class="bg-line-1"></div>
+        <div class="bg-line-2"></div>
+
+        <!-- 头像与页脚 -->
+        <div class="avatar">
+            <!-- 极简人像图标 -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/>
+                <circle cx="12" cy="7" r="4"/>
+            </svg>
+        </div>
+        <div class="backdrop">
+            <div class="title">Minimalist</div>
+            <div class="subtitle">Stay Simple, Stay Focused</div>
+        </div>
+
+        <!-- 图标与网格 -->
+        <div class="main-content">
+            <!-- 左侧信封 -->
+            <div class="left-widget">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                </svg>
+            </div>
+            
+            <!-- 右侧 2x3 网格 -->
+            <div class="right-grid">
+                <!-- 微信 -->
+                <div class="app-item">
+                    <div class="app-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/>
+                        </svg>
+                    </div>
+                    <span class="app-name">微信</span>
+                </div>
+                <!-- 世界书 -->
+                <div class="app-item">
+                    <div class="app-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M4 19.5A2.5 2.5 0 016.5 17H20"/>
+                            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/>
+                        </svg>
+                    </div>
+                    <span class="app-name">世界书</span>
+                </div>
+                <!-- 设置 -->
+                <div class="app-item">
+                    <div class="app-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <circle cx="12" cy="12" r="3"/>
+                            <path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-2 2 2 2 0 01-2-2v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 01-2-2 2 2 0 012-2h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 010-2.83 2 2 0 012.83 0l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 012-2 2 2 0 012 2v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 0 2 2 0 010 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 012 2 2 2 0 01-2 2h-.09a1.65 1.65 0 00-1.51 1z"/>
+                        </svg>
+                    </div>
+                    <span class="app-name">设置</span>
+                </div>
+                <!-- 美化 -->
+                <div class="app-item">
+                    <div class="app-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/>
+                            <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+                            <line x1="12" y1="22.08" x2="12" y2="12"/>
+                        </svg>
+                    </div>
+                    <span class="app-name">美化</span>
+                </div>
+                <!-- 微博 -->
+                <div class="app-item">
+                    <div class="app-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <circle cx="12" cy="12" r="10"/>
+                            <path d="M8 14s1.5 2 4 2 4-2 4-2"/>
+                            <line x1="9" y1="9" x2="9.01" y2="9"/>
+                            <line x1="15" y1="9" x2="15.01" y2="9"/>
+                        </svg>
+                    </div>
+                    <span class="app-name">微博</span>
+                </div>
+                <!-- 小红书 -->
+                <div class="app-item">
+                    <div class="app-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+                            <line x1="3" y1="6" x2="21" y2="6"/>
+                            <path d="M16 10a4 4 0 01-8 0"/>
+                        </svg>
+                    </div>
+                    <span class="app-name">小红书</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 底栏 (Dock) -->
+        <div class="dock">
+            <!-- 手机 -->
+            <div class="dock-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/>
+                </svg>
+            </div>
+            <!-- 小说 -->
+            <div class="dock-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/>
+                    <path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/>
+                </svg>
+            </div>
+            <!-- 论坛 -->
+            <div class="dock-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/>
+                    <circle cx="9" cy="7" r="4"/>
+                    <path d="M23 21v-2a4 4 0 00-3-3.87"/>
+                    <path d="M16 3.13a4 4 0 010 7.75"/>
+                </svg>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
